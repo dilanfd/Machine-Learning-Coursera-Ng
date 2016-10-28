@@ -21,6 +21,35 @@ p = zeros(size(X, 1), 1);
 %       can use max(A, [], 2) to obtain the max for each row.
 %
 
+% add the column of 1's to X:
+X = [ones(m, 1) X];
+a1 = X; % for better generalization of code.
+
+%prediction at layer 2:
+z2 = a1 * Theta1';
+
+%compute a2:
+a2 = sigmoid(z2);
+
+%add a column of 1s of *size k* to a2:
+k = size(a2,1);
+a2 = [ones(k, 1) a2];
+
+% See a pitfall below.
+% note that adding a column of 1s BEFORE 'sigmoiding' doesn't work.
+% b/c sigmoid(1) = 0.7311 but we need a column of 1s. Earlier program
+% was right as far as dimensions go but didn't work bc of this glitch.
+% Did 
+
+%compute z3:
+z3 = a2*Theta2';
+
+%compute a3, the prediction matrix at layer 3;
+a3 = sigmoid(z3);
+
+%set p to be the index of the max of each row is p
+[Max_p,p] = max(a3, [], 2);
+
 
 
 
